@@ -78,7 +78,7 @@ class Filter2DRequest
       // Make buffers resident in the device
       // If done after setArg, then buffers are pinned and runtime knows in which bank they should be made resident,
       // removing the need for using the vendor extensions to explicitely map to DDR.
-      OCL_CHECK(err, err = q.enqueueMigrateMemObjects({coef_buffer, src_buffer, dst_buffer}, CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED));
+      //OCL_CHECK(err, err = q.enqueueMigrateMemObjects({coef_buffer, src_buffer, dst_buffer}, CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED));
 
       // Make sure buffers are migrated before continuing
       q.finish();
@@ -132,7 +132,7 @@ class Filter2DRequest
       events.push_back(run_event);
 
       // Schedule the reading of the outputs from device back to host
-      //OCL_CHECK(err, err = q.enqueueReadBuffer(dst_buffer, CL_FALSE, offset, nbytes, dst, &events, &out_event) );
+      OCL_CHECK(err, err = q.enqueueReadBuffer(dst_buffer, CL_FALSE, offset, nbytes, dst, &events, &out_event) );
       events.push_back(out_event);       
     }
 
